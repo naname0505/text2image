@@ -1,8 +1,0 @@
-# 「.AppleDouble」フォルダを除外
-.data/
-.models/
-__pycache__/
-*.py[cod]
-
-# 「.DS_Store」や「._.DS_Store」を除外
-#*.DS_Store
