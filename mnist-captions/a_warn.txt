@@ -1,0 +1,373 @@
+alignDraw.py:99: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  x = T.matrix() # has dimension batch_size x dimX
+alignDraw.py:121: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h0_lang = T.extra_ops.repeat(h0_lang, repeats=y.shape[0], axis=0)
+alignDraw.py:122: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h0_enc = T.extra_ops.repeat(h0_enc, repeats=y.shape[0], axis=0)
+alignDraw.py:123: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h0_dec = T.extra_ops.repeat(h0_dec, repeats=y.shape[0], axis=0)
+alignDraw.py:124: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  c0 = T.extra_ops.repeat(c0, repeats=y.shape[0], axis=0)
+alignDraw.py:126: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell0_lang = T.zeros((y.shape[0],dimLangRNN))
+alignDraw.py:127: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell0_enc = T.zeros((y.shape[0],dimRNNEnc))
+alignDraw.py:128: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell0_dec = T.zeros((y.shape[0],dimRNNDec))
+alignDraw.py:130: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  kl_0 = T.zeros(())
+alignDraw.py:131: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_prior_0 = T.zeros((y.shape[0],dimZ))
+alignDraw.py:132: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_sigma_prior_0 =  T.zeros((y.shape[0],dimZ))
+alignDraw.py:135: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  eps = rng.normal(size=(runStepsInt,y.shape[0],dimZ), avg=0.0, std=1.0, dtype=floatX)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:94: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  nw_x = x.type()
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:660: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  tensor.shape_padleft(actual_arg), 0),
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/ops.py:715: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return gof.Apply(self, [x], [t()])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:614: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  empty = tensor.AllocEmpty(tensor_var.dtype)(*new_shape)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:616: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  ret = tensor.set_subtensor(empty[:shapes[0]], tensor_var)
+alignDraw.py:141: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  temp_1hot = T.zeros((y_t.shape[0], dimY))
+alignDraw.py:142: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  y_t_1hot = T.set_subtensor(temp_1hot[T.arange(y_t.shape[0]), y_t], 1) # batch_size x dimY
+alignDraw.py:144: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  lstm_t = T.dot(y_t_1hot, W_y_h) + T.dot(h_tm1, W_h_h) + b_h
+alignDraw.py:145: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  i_t = T.nnet.sigmoid(lstm_t[:, 0*dimLangRNN:1*dimLangRNN])
+alignDraw.py:146: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_t = T.nnet.sigmoid(lstm_t[:, 1*dimLangRNN:2*dimLangRNN])
+alignDraw.py:147: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell_t = f_t * cell_tm1 + i_t * T.tanh(lstm_t[:, 2*dimLangRNN:3*dimLangRNN])
+alignDraw.py:148: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  o_t = T.nnet.sigmoid(lstm_t[:, 3*dimLangRNN:4*dimLangRNN])
+alignDraw.py:149: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t = o_t * T.tanh(cell_t)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:821: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  fake_nonseqs = [x.type() for x in non_seqs]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:231: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  tmp_replace = [(x, x.type()) for x, y in items]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py:96: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  [clone_d[i] for i in owner.inputs], strict=rebuild_strict)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/function_module.py:181: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  update_mapping=update_mapping)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:231: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  tmp_replace = [(x, x.type()) for x, y in items]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py:96: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  [clone_d[i] for i in owner.inputs], strict=rebuild_strict)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:634: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  [t() for t in self.output_types])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:1098: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  out_ls.append(out[offsets[idx]:])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:94: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  nw_x = x.type()
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:660: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  tensor.shape_padleft(actual_arg), 0),
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/ops.py:715: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return gof.Apply(self, [x], [t()])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:614: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  empty = tensor.AllocEmpty(tensor_var.dtype)(*new_shape)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_utils.py:616: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  ret = tensor.set_subtensor(empty[:shapes[0]], tensor_var)
+alignDraw.py:141: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  temp_1hot = T.zeros((y_t.shape[0], dimY))
+alignDraw.py:142: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  y_t_1hot = T.set_subtensor(temp_1hot[T.arange(y_t.shape[0]), y_t], 1) # batch_size x dimY
+alignDraw.py:144: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  lstm_t = T.dot(y_t_1hot, W_y_h) + T.dot(h_tm1, W_h_h) + b_h
+alignDraw.py:145: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  i_t = T.nnet.sigmoid(lstm_t[:, 0*dimLangRNN:1*dimLangRNN])
+alignDraw.py:146: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_t = T.nnet.sigmoid(lstm_t[:, 1*dimLangRNN:2*dimLangRNN])
+alignDraw.py:147: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell_t = f_t * cell_tm1 + i_t * T.tanh(lstm_t[:, 2*dimLangRNN:3*dimLangRNN])
+alignDraw.py:148: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  o_t = T.nnet.sigmoid(lstm_t[:, 3*dimLangRNN:4*dimLangRNN])
+alignDraw.py:149: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t = o_t * T.tanh(cell_t)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:821: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  fake_nonseqs = [x.type() for x in non_seqs]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/function_module.py:181: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  update_mapping=update_mapping)
+alignDraw.py:161: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t_lang = T.concatenate([h_t_forward, h_t_backward], axis=2) # was -1
+alignDraw.py:162: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  hid_align = h_t_lang.dimshuffle([0,1,2,'x']) * W_lang_align.dimshuffle(['x','x',0,1])
+alignDraw.py:163: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  hid_align = hid_align.sum(axis=2) # sentence_length x batch_size x dimAlign # was -2
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:503: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  actual_slice = seq['input'][k - mintap]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:505: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  _seq_val_slice = _seq_val[k - mintap]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:506: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  nw_slice = _seq_val_slice.type()
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:540: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  nw_seq = seq['input'][start:]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan.py:585: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  scan_seqs = [seq[:actual_n_steps] for seq in scan_seqs]
+alignDraw.py:171: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  x_t_hat = x - T.nnet.sigmoid(c_tm1)
+alignDraw.py:174: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  read_attent_params = T.dot(h_tm1_dec, W_hdec_read_attent) + b_read_attent # dimension batch_size x 5
+/Users/naname/text2image/mnist-captions/attention.py:22: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  g_hat_x = matrix[:,0]
+/Users/naname/text2image/mnist-captions/attention.py:23: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  g_hat_y = matrix[:,1]
+/Users/naname/text2image/mnist-captions/attention.py:24: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_delta = matrix[:,2]
+/Users/naname/text2image/mnist-captions/attention.py:25: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_sigma_sqr = matrix[:,3]
+/Users/naname/text2image/mnist-captions/attention.py:26: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_gamma = matrix[:,4]
+/Users/naname/text2image/mnist-captions/attention.py:28: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  g_x = (self.A + 1.0) / 2.0 * (g_hat_x + 1.0)
+/Users/naname/text2image/mnist-captions/attention.py:29: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  g_y = (self.B + 1.0) / 2.0 * (g_hat_y + 1.0)
+/Users/naname/text2image/mnist-captions/attention.py:31: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  delta = (max(self.A,self.B) - 1.0) / (self.N - 1) * T.exp(log_delta)
+/Users/naname/text2image/mnist-captions/attention.py:32: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  gamma = T.exp(log_gamma).dimshuffle(0, 'x')
+/Users/naname/text2image/mnist-captions/attention.py:33: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  sigma = T.exp(log_sigma_sqr/2.0)
+/Users/naname/text2image/mnist-captions/attention.py:57: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_x = g_x.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*(T.arange(self.N)-self.N/2-0.5) # dimension (batch_size, N)
+/Users/naname/text2image/mnist-captions/attention.py:58: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_y = g_y.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*(T.arange(self.N)-self.N/2-0.5)
+/Users/naname/text2image/mnist-captions/attention.py:63: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_x = T.exp( -(a-mu_x.dimshuffle([0,1,'x']))**2 / 2. / sigma.dimshuffle([0,'x','x'])**2 ) # dimension (batch_size, N, A)
+/Users/naname/text2image/mnist-captions/attention.py:64: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_y = T.exp( -(b-mu_y.dimshuffle([0,1,'x']))**2 / 2. / sigma.dimshuffle([0,'x','x'])**2 )
+/Users/naname/text2image/mnist-captions/attention.py:66: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_x = f_x / (f_x.sum(axis=2).dimshuffle(0, 1, 'x') + tol) # dimension (batch_size, N, A)
+/Users/naname/text2image/mnist-captions/attention.py:67: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_y = f_y / (f_y.sum(axis=2).dimshuffle(0, 1, 'x') + tol)
+/Users/naname/text2image/mnist-captions/attention.py:79: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  reshaped_images = images.reshape( (batch_size, self.A, self.B) ) # dimension (batch_size, A, B)
+/Users/naname/text2image/mnist-captions/attention.py:17: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  matrix3 = matrix1.dimshuffle([0,1,2,'x']) * matrix2.dimshuffle([0,'x',1,2])
+/Users/naname/text2image/mnist-captions/attention.py:18: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return matrix3.sum(axis=2)
+/Users/naname/text2image/mnist-captions/attention.py:81: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  w = self.internal_dot_product(self.internal_dot_product(f_y, reshaped_images), f_x.transpose([0,2,1]))
+/Users/naname/text2image/mnist-captions/attention.py:82: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return w.reshape((batch_size, self.N*self.N))
+alignDraw.py:180: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  r_t = gamma_read * T.concatenate([x_read, x_t_hat_read], axis=1)
+alignDraw.py:185: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  hdec_align = T.dot(h_tm1_dec, W_hdec_align) # batch_size x dimAlign
+alignDraw.py:186: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  all_align = T.tanh(hid_align + hdec_align.dimshuffle(['x', 0, 1]) + b_align.dimshuffle(['x','x',0])) # sentence_length x batch_size x dimAlign
+alignDraw.py:188: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  e = all_align * v_align.dimshuffle(['x','x',0])
+alignDraw.py:189: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  e = e.sum(axis=2) # sentence_length x batch_size # was -1
+alignDraw.py:192: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  alpha = (T.nnet.softmax(e.T)).T # sentence_length x batch_size
+alignDraw.py:195: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  s_t = alpha.dimshuffle([0, 1, 'x']) * h_t_lang
+alignDraw.py:196: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  s_t = s_t.sum(axis=0) # batch_size x (dimLangRNN * 2)
+alignDraw.py:199: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  lstm_t_enc = T.dot(h_tm1_enc, W_henc_henc) + T.dot(T.concatenate([r_t, h_tm1_dec], axis=1), W_inp_henc) + b_henc
+alignDraw.py:200: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  i_t_enc = T.nnet.sigmoid(lstm_t_enc[:, 0*dimRNNEnc:1*dimRNNEnc])
+alignDraw.py:201: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_t_enc = T.nnet.sigmoid(lstm_t_enc[:, 1*dimRNNEnc:2*dimRNNEnc])
+alignDraw.py:202: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell_t_enc = f_t_enc * cell_tm1_enc + i_t_enc * T.tanh(lstm_t_enc[:, 2*dimRNNEnc:3*dimRNNEnc])
+alignDraw.py:203: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  o_t_enc = T.nnet.sigmoid(lstm_t_enc[:, 3*dimRNNEnc:4*dimRNNEnc])
+alignDraw.py:204: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t_enc = o_t_enc * T.tanh(cell_t_enc)
+alignDraw.py:207: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_enc = T.dot(h_t_enc, W_henc_mu) + b_mu
+alignDraw.py:208: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_sigma_enc = 0.5 * (T.dot(h_t_enc, W_henc_logsigma) + b_logsigma)
+alignDraw.py:209: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  z_t = mu_enc + T.exp(log_sigma_enc) * eps_t
+alignDraw.py:211: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  kl_t = kl_tm1 + T.sum(-1 + ((mu_enc - mu_prior_tm1)**2  + T.exp(2*log_sigma_enc)) / (T.exp(2 * log_sigma_prior_tm1)) - 2*log_sigma_enc + 2*log_sigma_prior_tm1)
+alignDraw.py:214: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  lstm_t_dec = T.dot(h_tm1_dec, W_hdec_hdec) + T.dot(z_t, W_z_hdec) + T.dot(s_t, W_s_hdec) + b_hdec
+alignDraw.py:215: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  i_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 0*dimRNNDec:1*dimRNNDec])
+alignDraw.py:216: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 1*dimRNNDec:2*dimRNNDec])
+alignDraw.py:217: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell_t_dec = f_t_dec * cell_tm1_dec + i_t_dec * T.tanh(lstm_t_dec[:, 2*dimRNNDec:3*dimRNNDec])
+alignDraw.py:218: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  o_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 3*dimRNNDec:4*dimRNNDec])
+alignDraw.py:219: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t_dec = o_t_dec * T.tanh(cell_t_dec)
+alignDraw.py:222: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_and_logsigma_prior_t = T.tanh(T.dot(h_t_dec, W_hdec_mu_and_logsigma_prior) + b_mu_and_logsigma_prior)
+alignDraw.py:223: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_prior_t = mu_and_logsigma_prior_t[:, 0:dimZ]
+alignDraw.py:224: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_sigma_prior_t = mu_and_logsigma_prior_t[:, dimZ:2*dimZ]
+alignDraw.py:227: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  write_attent_params = T.dot(h_t_dec, W_hdec_write_attent) + b_write_attent
+alignDraw.py:228: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  window_t = T.dot(h_t_dec, W_hdec_c) + b_c
+/Users/naname/text2image/mnist-captions/attention.py:87: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  reshaped_windows = windows.reshape( (batch_size, self.N, self.N) ) # dimension (batch_size, N, N)
+/Users/naname/text2image/mnist-captions/attention.py:89: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  im = self.internal_dot_product(self.internal_dot_product(f_y.transpose([0,2,1]), reshaped_windows), f_x)
+/Users/naname/text2image/mnist-captions/attention.py:90: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return im.reshape((batch_size, self.A * self.B))
+alignDraw.py:233: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  c_t = c_tm1 + 1.0/gamma_write * x_t_write
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/ops.py:161: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return gof.Apply(self, [x], [x.type()])
+alignDraw.py:238: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  z_t = mu_prior_tm1 + T.exp(log_sigma_prior_tm1) * eps_t
+alignDraw.py:241: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  hdec_align = T.dot(h_tm1_dec, W_hdec_align) # batch_size x dimAlign
+alignDraw.py:242: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  all_align = T.tanh(hid_align + hdec_align.dimshuffle(['x', 0, 1]) + b_align.dimshuffle(['x','x',0])) # sentence_length x batch_size x dimAlign
+alignDraw.py:244: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  e = all_align * v_align.dimshuffle(['x','x',0])
+alignDraw.py:245: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  e = e.sum(axis=2) # sentence_length x batch_size # was -1
+alignDraw.py:248: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  alpha = (T.nnet.softmax(e.T)).T # sentence_length x batch_size
+alignDraw.py:251: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  s_t = alpha.dimshuffle([0, 1, 'x']) * h_t_lang
+alignDraw.py:252: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  s_t = s_t.sum(axis=0) # batch_size x (dimLangRNN * 2)
+alignDraw.py:255: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  lstm_t_dec = T.dot(h_tm1_dec, W_hdec_hdec) + T.dot(z_t, W_z_hdec) + T.dot(s_t, W_s_hdec) + b_hdec
+alignDraw.py:256: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  i_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 0*dimRNNDec:1*dimRNNDec])
+alignDraw.py:257: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  f_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 1*dimRNNDec:2*dimRNNDec])
+alignDraw.py:258: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  cell_t_dec = f_t_dec * cell_tm1_dec + i_t_dec * T.tanh(lstm_t_dec[:, 2*dimRNNDec:3*dimRNNDec])
+alignDraw.py:259: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  o_t_dec = T.nnet.sigmoid(lstm_t_dec[:, 3*dimRNNDec:4*dimRNNDec])
+alignDraw.py:260: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  h_t_dec = o_t_dec * T.tanh(cell_t_dec)
+alignDraw.py:263: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_and_logsigma_prior_t = T.tanh(T.dot(h_t_dec, W_hdec_mu_and_logsigma_prior) + b_mu_and_logsigma_prior)
+alignDraw.py:264: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  mu_prior_t = mu_and_logsigma_prior_t[:, 0:dimZ]
+alignDraw.py:265: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_sigma_prior_t = mu_and_logsigma_prior_t[:, dimZ:2*dimZ]
+alignDraw.py:268: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  write_attent_params = T.dot(h_t_dec, W_hdec_write_attent) + b_write_attent
+alignDraw.py:269: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  window_t = T.dot(h_t_dec, W_hdec_c) + b_c
+alignDraw.py:274: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  c_t = c_tm1 + 1.0/gamma_write * x_t_write
+alignDraw.py:275: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return [c_t.astype(floatX), h_t_dec.astype(floatX), cell_t_dec.astype(floatX), mu_prior_t.astype(floatX), log_sigma_prior_t, write_attent_params, alpha.T]
+alignDraw.py:292: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  c_t_final = T.nnet.sigmoid(c_t[-1])
+alignDraw.py:293: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  kl_final = 0.5 * kl_t[-1]
+alignDraw.py:294: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  logpxz = T.nnet.binary_crossentropy(c_t_final,x).sum()
+alignDraw.py:295: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_likelihood = kl_final + logpxz
+alignDraw.py:297: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  log_likelihood = log_likelihood.sum() / y.shape[0]
+alignDraw.py:298: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  kl_final = kl_final.sum() / y.shape[0]
+alignDraw.py:299: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  logpxz = logpxz.sum() / y.shape[0]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gradient.py:1396: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  return x.ones_like(dtype=dtype)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gradient.py:1162: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  new_output_grads)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gradient.py:1358: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  grad_dict[var] = reduce(lambda x, y: x + y, terms)
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2040: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  known_grads = OrderedDict([(k.copy(), v) for (k, v) in known_grads.items()])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2174: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  dC_dinps_t[dx + self.n_seqs] += dC_dXtm1
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2181: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  outer_inp_seqs = [x[::-1] for x in inputs[1:1 + self.n_seqs]]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2196: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  x[:-1][::-1] for x in self.outer_sitsot_outs(outs)]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2233: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  outer_inp_seqs += [x[::-1][:-1] for x in self.outer_sitsot_outs(outs)]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2234: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  outer_inp_seqs += [x[::-1] for x in self.outer_nitsot_outs(outs)]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2238: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  outer_inp_seqs = [s_[:grad_steps] for s_ in outer_inp_seqs]
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2392: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  outer_inp_mitmot.append(dC_douts[idx + offset][::-1])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2404: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  dtype=dC_dinps_t[ins_pos].dtype))
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2496: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  dtype=y.dtype))
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2569: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  gradients.append(x[::-1])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2597: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  gradients.append(x[::-1])
+/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/scan_module/scan_op.py:2634: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  gradients.append(x[-1])
+alignDraw.py:398: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  self._lr = T.scalar('lr', dtype=floatX)
+alignDraw.py:413: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  l2_norm_grad = T.sqrt(T.sqr(grad).sum())
+alignDraw.py:414: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  multiplier = T.switch(l2_norm_grad < threshold, 1, threshold / l2_norm_grad)
+alignDraw.py:415: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  grad = multiplier * grad
+alignDraw.py:417: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  param_his_new = decay_rate * param_his + (1 - decay_rate) * grad**2
+alignDraw.py:420: UserWarning: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  self._updates_train_and_params[param] = param - (self._lr / T.sqrt(param_his_new + 1e-6)) * grad
+Success to load the model !!!!!
+./data/mnist.h5
+Your pathToWeights is None !!!!
+(50000, 784) (50000,) (10000, 784) (10000,)
+Banned configurations are :
+[5, 10, 9, 7, 8, 5, 7, 5, 0, 10, 10, 5]
+Train Dataset
+(10000, 3600) (10000, 12) [1225, 1151, 1141, 1126, 1200, 1461, 1425, 1271]
+[[ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]]
+Val Dataset
+(10000, 3600) (10000, 12) [1281, 1135, 1165, 1105, 1258, 1388, 1404, 1264]
+building gradient function
+0:00:52.924835
+building train function
+Traceback (most recent call last):
+  File "alignDraw.py", line 623, in <module>
+    rvae.train(lr, epochs, save=save, savedir=savedir, validateAfter=validateAfter)
+  File "alignDraw.py", line 473, in train
+    self._build_train_function()
+  File "alignDraw.py", line 429, in _build_train_function
+    self._y: self.train_captions[self._index_cap]
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/function.py", line 317, in function
+    output_keys=output_keys)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 449, in pfunc
+    no_default_updates=no_default_updates)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 219, in rebuild_collect_shared
+    cloned_v = clone_v_get_shared_updates(v, copy_inputs_over)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 93, in clone_v_get_shared_updates
+    clone_v_get_shared_updates(i, copy_inputs_over)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 93, in clone_v_get_shared_updates
+    clone_v_get_shared_updates(i, copy_inputs_over)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 93, in clone_v_get_shared_updates
+    clone_v_get_shared_updates(i, copy_inputs_over)
+  [Previous line repeated 1 more times]
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 96, in clone_v_get_shared_updates
+    [clone_d[i] for i in owner.inputs], strict=rebuild_strict)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gof/graph.py", line 242, in clone_with_new_inputs
+    new_inputs[i] = curr.type.filter_variable(new)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/type.py", line 234, in filter_variable
+    self=self))
+TypeError: Cannot convert Type TensorType(float32, matrix) (of Variable AdvancedSubtensor1.0) into Type TensorType(float64, matrix). You can try to manually convert AdvancedSubtensor1.0 into a TensorType(float64, matrix).

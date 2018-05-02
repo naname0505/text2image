@@ -1,0 +1,33 @@
+Success to load the model !!!!!
+./data/mnist.h5
+Your pathToWeights is None !!!!
+(50000, 784) (50000,) (10000, 784) (10000,)
+Banned configurations are :
+[7, 6, 5, 3, 6, 9, 9, 10, 3, 7, 4, 9]
+Train Dataset
+(10000, 3600) (10000, 12) [1106, 1156, 1223, 1322, 1352, 1293, 1262, 1286]
+[[ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ ..., 
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]
+ [ 0.  0.  0. ...,  0.  0.  0.]]
+Val Dataset
+(10000, 3600) (10000, 12) [1186, 1176, 1157, 1310, 1251, 1271, 1306, 1343]
+Traceback (most recent call last):
+  File "alignDraw.py", line 622, in <module>
+    rvae = ReccurentAttentionVAE(dimY, dimLangRNN, dimAlign, dimX, dimReadAttent, dimWriteAttent, dimRNNEnc, dimRNNDec, dimZ, runSteps, batch_size, reduceLRAfter, train_data, train_labels, valData=val_data, valLabels=val_labels, pathToWeights=pathToWeights)
+  File "alignDraw.py", line 350, in __init__
+    self._kl_final, self._logpxz, self._log_likelihood, self._c_ts, self._c_ts_gener, self._x, self._y, self._run_steps, self._updates_train, self._updates_gener, self._read_attent_params, self._write_attent_params, self._write_attent_params_gener, self._alphas_gener, self._params, self._mu_prior_t_gener, self._log_sigma_prior_t_gener = build_lang_encoder_and_attention_vae_decoder(self.dimY, self.dimLangRNN, self.dimAlign, self.dimX, self.dimReadAttent, self.dimWriteAttent, self.dimRNNEnc, self.dimRNNDec, self.dimZ, self.runSteps, self.pathToWeights)
+  File "alignDraw.py", line 99, in build_lang_encoder_and_attention_vae_decoder
+    x = T.matrix() # has dimension batch_size x dimX
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/basic.py", line 756, in matrix
+    return type(name)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gof/type.py", line 419, in __call__
+    return utils.add_tag_trace(self.make_variable(name))
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/type.py", line 352, in make_variable
+    return self.Variable(self, name=name)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/var.py", line 852, in __init__
+    raise Exception(msg)
+Exception: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
