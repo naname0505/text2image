@@ -1,11 +1,11 @@
 Success to load the model !!!!!
-./data/mnist.h5
+../data/mnist.h5
 Your pathToWeights is None !!!!
 (50000, 784) (50000,) (10000, 784) (10000,)
 Banned configurations are :
-[7, 6, 5, 3, 6, 9, 9, 10, 3, 7, 4, 9]
+[1, 6, 0, 5, 4, 1, 9, 9, 4, 10, 6, 3]
 Train Dataset
-(10000, 3600) (10000, 12) [1106, 1156, 1223, 1322, 1352, 1293, 1262, 1286]
+(10000, 3600) (10000, 12) [1191, 1183, 1142, 1143, 1309, 1428, 1308, 1296]
 [[ 0.  0.  0. ...,  0.  0.  0.]
  [ 0.  0.  0. ...,  0.  0.  0.]
  [ 0.  0.  0. ...,  0.  0.  0.]
@@ -14,20 +14,32 @@ Train Dataset
  [ 0.  0.  0. ...,  0.  0.  0.]
  [ 0.  0.  0. ...,  0.  0.  0.]]
 Val Dataset
-(10000, 3600) (10000, 12) [1186, 1176, 1157, 1310, 1251, 1271, 1306, 1343]
+(10000, 3600) (10000, 12) [1097, 1134, 1131, 1172, 1307, 1497, 1343, 1319]
+@@@@@@@@@@@@
+<class 'theano.tensor.var.TensorVariable'>
+building gradient function
+0:00:07.133312:消費時間
+building train function
 Traceback (most recent call last):
-  File "alignDraw.py", line 622, in <module>
-    rvae = ReccurentAttentionVAE(dimY, dimLangRNN, dimAlign, dimX, dimReadAttent, dimWriteAttent, dimRNNEnc, dimRNNDec, dimZ, runSteps, batch_size, reduceLRAfter, train_data, train_labels, valData=val_data, valLabels=val_labels, pathToWeights=pathToWeights)
-  File "alignDraw.py", line 350, in __init__
-    self._kl_final, self._logpxz, self._log_likelihood, self._c_ts, self._c_ts_gener, self._x, self._y, self._run_steps, self._updates_train, self._updates_gener, self._read_attent_params, self._write_attent_params, self._write_attent_params_gener, self._alphas_gener, self._params, self._mu_prior_t_gener, self._log_sigma_prior_t_gener = build_lang_encoder_and_attention_vae_decoder(self.dimY, self.dimLangRNN, self.dimAlign, self.dimX, self.dimReadAttent, self.dimWriteAttent, self.dimRNNEnc, self.dimRNNDec, self.dimZ, self.runSteps, self.pathToWeights)
-  File "alignDraw.py", line 99, in build_lang_encoder_and_attention_vae_decoder
-    x = T.matrix() # has dimension batch_size x dimX
-  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/basic.py", line 756, in matrix
-    return type(name)
-  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/gof/type.py", line 419, in __call__
-    return utils.add_tag_trace(self.make_variable(name))
-  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/type.py", line 352, in make_variable
-    return self.Variable(self, name=name)
-  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/var.py", line 852, in __init__
-    raise Exception(msg)
-Exception: You are creating a TensorVariable with float64 dtype. You requested an action via the Theano flag warn_float64={ignore,warn,raise,pdb}.
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 193, in rebuild_collect_shared
+    allow_convert=False)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/tensor/type.py", line 234, in filter_variable
+    self=self))
+TypeError: Cannot convert Type TensorType(float64, matrix) (of Variable Elemwise{add,no_inplace}.0) into Type TensorType(float32, matrix). You can try to manually convert Elemwise{add,no_inplace}.0 into a TensorType(float32, matrix).
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "alignDraw.py", line 625, in <module>
+    rvae.train(lr, epochs, save=save, savedir=savedir, validateAfter=validateAfter)
+  File "alignDraw.py", line 475, in train
+    self._build_train_function()
+  File "alignDraw.py", line 431, in _build_train_function
+    self._y: self.train_captions[self._index_cap]
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/function.py", line 317, in function
+    output_keys=output_keys)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 449, in pfunc
+    no_default_updates=no_default_updates)
+  File "/Users/naname/.pyenv/versions/TF/lib/python3.6/site-packages/theano/compile/pfunc.py", line 208, in rebuild_collect_shared
+    raise TypeError(err_msg, err_sug)
+TypeError: ('An update must have the same type as the original shared variable (shared_var=<TensorType(float32, matrix)>, shared_var.type=TensorType(float32, matrix), update_val=Elemwise{add,no_inplace}.0, update_val.type=TensorType(float64, matrix)).', 'If the difference is related to the broadcast pattern, you can call the tensor.unbroadcast(var, axis_to_unbroadcast[, ...]) function to remove broadcastable dimensions.')

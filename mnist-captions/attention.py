@@ -52,18 +52,33 @@ class SelectiveAttentionModel(object):
         return g_y, g_x, delta, sigma, gamma
 
     def get_filterbank_matrices(self, g_y, g_x, delta, sigma):
+        print("##  read the func 'get_filterbank' from attention.py in 54 line")
+        """
+        print("$$$$$$$$$$$$$$$$$$$$$$")
+        print(g_y,type(g_y))
+        print(g_x,type(g_x))
+        print("$$$$$$$$$$$$$$$$$$$$$$")
+        """
 
         tol = 1e-04
-        mu_x = g_x.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*(T.arange(self.N)-self.N/2-0.5) # dimension (batch_size, N)
-        mu_y = g_y.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*(T.arange(self.N)-self.N/2-0.5)
+        print("4444 kokode 4nu 4444")
+        mu_x = g_x.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*  \
+                (T.arange(self.N)-self.N/2-0.5) # dimension (batch_size, N)
+        
+        print(mu_x.eval(), mu_x)
+        mu_y = g_y.dimshuffle([0, 'x']) + delta.dimshuffle([0, 'x'])*  \
+                (T.arange(self.N)-self.N/2-0.5)
 
         a = T.arange(self.A)
         b = T.arange(self.B)
 
-        f_x = T.exp( -(a-mu_x.dimshuffle([0,1,'x']))**2 / 2. / sigma.dimshuffle([0,'x','x'])**2 ) # dimension (batch_size, N, A)
-        f_y = T.exp( -(b-mu_y.dimshuffle([0,1,'x']))**2 / 2. / sigma.dimshuffle([0,'x','x'])**2 )
+        f_x = T.exp( -(a-mu_x.dimshuffle([0,1,'x']))**2 / 2. /
+                sigma.dimshuffle([0,'x','x'])**2 ) # dimension (batch_size, N, A)
+        f_y = T.exp( -(b-mu_y.dimshuffle([0,1,'x']))**2 / 2. /
+                sigma.dimshuffle([0,'x','x'])**2 )
 
-        f_x = f_x / (f_x.sum(axis=2).dimshuffle(0, 1, 'x') + tol) # dimension (batch_size, N, A)
+        f_x = f_x / (f_x.sum(axis=2).dimshuffle(0, 1, 'x') + tol)
+        # dimension (batch_size, N, A)
         f_y = f_y / (f_y.sum(axis=2).dimshuffle(0, 1, 'x') + tol)
         return f_y, f_x
 
@@ -74,9 +89,18 @@ class SelectiveAttentionModel(object):
         return mu_y, mu_x
 
     def read(self, images, g_y, g_x, delta, sigma):
+        print("##############")
+        print(g_y)
+        print(g_x)
+        
         f_y, f_x = self.get_filterbank_matrices(g_y, g_x, delta, sigma)
+        print("@@@@@@@@@@@@@@@@@@@")
+        print(f_y, type(f_y))
+        print(f_x, type(f_x))
+        print("@@@@@@@@@@@@@@@@@@@")
         batch_size = images.shape[0]
-        reshaped_images = images.reshape( (batch_size, self.A, self.B) ) # dimension (batch_size, A, B)
+        reshaped_images = images.reshape( (batch_size, self.A, self.B) )
+        # dimension (batch_size, A, B)
 
         w = self.internal_dot_product(self.internal_dot_product(f_y, reshaped_images), f_x.transpose([0,2,1]))
         return w.reshape((batch_size, self.N*self.N))
@@ -84,7 +108,8 @@ class SelectiveAttentionModel(object):
     def write(self, windows, g_y, g_x, delta, sigma):
         f_y, f_x = self.get_filterbank_matrices(g_y, g_x, delta, sigma)
         batch_size = windows.shape[0]
-        reshaped_windows = windows.reshape( (batch_size, self.N, self.N) ) # dimension (batch_size, N, N)
+        reshaped_windows = windows.reshape( (batch_size, self.N, self.N) )
+        # dimension (batch_size, N, N)
 
         im = self.internal_dot_product(self.internal_dot_product(f_y.transpose([0,2,1]), reshaped_windows), f_x)
         return im.reshape((batch_size, self.A * self.B))

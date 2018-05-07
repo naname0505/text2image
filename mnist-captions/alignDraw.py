@@ -41,7 +41,11 @@ rng = RandomStreams(seed=np.random.randint(1 << 30))
 params_names = ['W_y_hLangEnc', 'W_hLangEnc_hLangEnc', 'b_hLangEnc', 'W_yRev_hLangEncRev', 'W_hLangEncRev_hLangEncRev', 'b_hLangEncRev', 'W_lang_align', 'W_hdec_align', 'b_align', 'v_align', 'W_s_hdec', 'W_hdec_read_attent', 'b_read_attent', 'W_henc_henc', 'W_inp_henc', 'b_henc', 'W_henc_mu', 'W_henc_logsigma', 'b_mu', 'b_logsigma', 'W_hdec_hdec', 'W_z_hdec', 'b_hdec', 'W_hdec_write_attent', 'b_write_attent', 'W_hdec_c', 'b_c', 'W_hdec_mu_and_logsigma_prior', 'b_mu_and_logsigma_prior', 'h0_lang', 'h0_enc', 'h0_dec', 'c0']
 
 def load_weights(path):
-    '''Path is a an absolute path to the hdf5 file containing all the weights including their history for AdaGrad'''
+    '''
+    Path is a an absolute path to the hdf5 file 
+    containing all the weights including their history for AdaGrad
+    '''
+    
     params = [0 for i in range(len(params_names))]
 
     for i in range(len(params)):
@@ -96,7 +100,10 @@ def create_align_weights(dimLangRNN, dimAlign, dimRNNEnc, dimRNNDec):
     return W_lang_align, W_hdec_align, b_align, v_align, W_s_hdec
 
 def build_lang_encoder_and_attention_vae_decoder(dimY, dimLangRNN, dimAlign, dimX, dimReadAttent, dimWriteAttent, dimRNNEnc, dimRNNDec, dimZ, runStepsInt, pathToWeights=None):
-    x = T.matrix() # has dimension batch_size x dimX
+    
+    x = T.matrix(dtype="float32") # has dimension batch_size x dimX
+    #print("@@@@@@@@@@@@")
+    #print(type(x))
     y = T.matrix(dtype="int32") # matrix (sentence itself) batch_size x words_in_sentence
     y_reverse = y[::-1]
     tol = 1e-04
@@ -175,6 +182,9 @@ def build_lang_encoder_and_attention_vae_decoder(dimY, dimLangRNN, dimAlign, dim
         g_y_read, g_x_read, delta_read, sigma_read, gamma_read = read_attention_model.matrix2att(read_attent_params)
         
         x_read = read_attention_model.read(x, g_y_read, g_x_read, delta_read, sigma_read)
+        print("@@@@@@@@@@@@@@@")
+        print(x_read,type(x_read), x_read.eval())
+        print("@@@@@@@@@@@@@@@")
         x_t_hat_read = read_attention_model.read(x_t_hat, g_y_read, g_x_read, delta_read, sigma_read)
 
         r_t = gamma_read * T.concatenate([x_read, x_t_hat_read], axis=1)
@@ -391,7 +401,7 @@ class ReccurentAttentionVAE():
         t1 = datetime.datetime.now()
         gradients = T.grad(self._log_likelihood, self._params)
         t2 = datetime.datetime.now()
-        print(t2-t1)
+        print(str(t2-t1)+":消費時間")
 
         self._index_cap = T.vector(dtype='int32') # index to the minibatch
         self._index_im = T.vector(dtype='int32')
