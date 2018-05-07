@@ -53,6 +53,7 @@ class SelectiveAttentionModel(object):
 
     def get_filterbank_matrices(self, g_y, g_x, delta, sigma):
         print("##  read the func 'get_filterbank' from attention.py in 54 line")
+        
         """
         print("$$$$$$$$$$$$$$$$$$$$$$")
         print(g_y,type(g_y))
@@ -89,7 +90,7 @@ class SelectiveAttentionModel(object):
         return mu_y, mu_x
 
     def read(self, images, g_y, g_x, delta, sigma):
-        print("##############")
+        print("## u are going to the read Function !!")
         print(g_y)
         print(g_x)
         
